@@ -2,6 +2,11 @@ import context from 'audio-context';
 
 import {Gain, Filter, Oscillator} from '.';
 
+export type WaveType = 'sawtooth'
+  | 'sine'
+  | 'square'
+  | 'triangle'
+  | 'custom'
 export class WebSynthBase {
   node: ReturnType<typeof context>;
   oscillator: OscillatorNode;
@@ -19,7 +24,11 @@ export class WebSynthBase {
       .connect(this.mixer)
       .connect(this.node?.destination!)
 
+    this.oscillator.frequency.value = 440;
+    this.oscillator.type = 'triangle'
+
     this.oscillator.start();
+
   }
   
   getOscillator(){
@@ -30,5 +39,7 @@ export class WebSynthBase {
     this.oscillator.frequency.value = frequency;
   }
 
-
+  setWaveType(waveType: WaveType){
+    this.oscillator.type = waveType
+  }
 }
