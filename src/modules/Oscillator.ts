@@ -10,4 +10,8 @@ export class Oscillator {
   getOscillator(){
     return this.node
   }
+
+  setFrequency(frequency: number){
+    this.node.frequency.value = frequency
+  }
 }

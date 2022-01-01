@@ -5,26 +5,30 @@ import {Gain, Filter, Oscillator} from '.';
 export class WebSynthBase {
   node: ReturnType<typeof context>;
   oscillator: OscillatorNode;
-  volume: GainNode;
+  mixer: GainNode;
   filter: BiquadFilterNode
 
-  constructor({volume}: any){
+  constructor(){
     this.node = context();
     this.oscillator = new Oscillator().getOscillator();
     this.filter = new Filter().getFilter();
-    this.volume = new Gain().getGain();
+    this.mixer = new Gain().getGain();
     
     this.oscillator
       .connect(this.filter)
-      .connect(this.volume)
+      .connect(this.mixer)
       .connect(this.node?.destination!)
 
     this.oscillator.start();
   }
-
-  setVolume(volume: number){
-    this.volume.gain.value = volume;
-
+  
+  getOscillator(){
+    return this.oscillator
   }
+
+  setFrequency(frequency: number){
+    this.oscillator.frequency.value = frequency;
+  }
+
 
 }
