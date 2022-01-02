@@ -1,6 +1,7 @@
-import  {useState} from 'react';
+import context from 'audio-context';
+import  {useState } from 'react';
 
-import { WaveType, WebSynthBase, WebSynthBaseOptions } from '../modules';
+import { WaveType } from '../modules';
 
 const waveTypes: WaveType[] = [
   'sawtooth',
@@ -9,130 +10,60 @@ const waveTypes: WaveType[] = [
   'triangle'
 ];
 
-function useWebSynth(options: WebSynthBaseOptions){
-  const [isPlaying, setPlaying] = useState(false)
 
-  const toggle = () => {
-    const state = new WebSynthBase(options)
-    if(isPlaying){
-      setPlaying(false)
-      state.stop()
-    } else {
-      setPlaying(true);
-      state.start()
-    }
-  }
+const pitchNames = [
+  {label: 'A', value: 440},
+  {label: 'B', value: 493.88},
+  {label: 'C#', value: 554.37},
+  {label: 'D', value: 587.33},
+  {label: 'E', value: 659.25},
+  {label: 'F#', value: 739.99},
+  {label: 'G#', value: 830.61}
+];
 
-  return {
-    toggle
-  }
-}
+const gains = [
+  0,
+  0.25,
+  0.5,
+  0.75,
+  1
+]
 
-function APitch({ waveType }: { waveType: WaveType }){
-  const options: WebSynthBaseOptions = {
-    frequency: 440,
-    gain: 0.5,
-    waveType
-  };
-  const synth = useWebSynth(options)
-  return (
-    <button onClick={synth.toggle}>
-      A
-    </button> 
-  )
-}
-
-function BPitch({ waveType }: { waveType: WaveType }){
-  const options: WebSynthBaseOptions = {
-    frequency: 493.88,
-    gain: 0.5,
-    waveType
-  };
-  const synth = useWebSynth(options)
-  return (
-    <button onClick={synth.toggle}>
-      B
-    </button> 
-  )
-};
-
-function CSharpPitch({ waveType }: { waveType: WaveType }){
-  const options: WebSynthBaseOptions = {
-    frequency: 554.37,
-    gain: 0.5,
-    waveType
-  };
-  const synth = useWebSynth(options)
-  return (
-    <button onClick={synth.toggle}>
-      C#
-    </button> 
-  )
-};
-
-function DPitch({ waveType }: { waveType: WaveType }){
-  const options: WebSynthBaseOptions = {
-    frequency: 587.33,
-    gain: 0.5,
-    waveType
-  };
-  const synth = useWebSynth(options)
-  return (
-    <button onClick={synth.toggle}>
-      D
-    </button> 
-  )
-};
-
-function EPitch({ waveType }: { waveType: WaveType }){
-  const options: WebSynthBaseOptions = {
-    frequency: 659.25,
-    gain: 0.5,
-    waveType
-  };
-  const synth = useWebSynth(options)
-  return (
-    <button onClick={synth.toggle}>
-      E
-    </button> 
-  )
-};
-
-function FSharpPitch({ waveType }: { waveType: WaveType }){
-  const options: WebSynthBaseOptions = {
-    frequency: 739.99,
-    gain: 0.5,
-    waveType
-  };
-  const synth = useWebSynth(options)
-  return (
-    <button onClick={synth.toggle}>
-      F#
-    </button> 
-  )
-};
-
-function GSharpPitch({ waveType }: { waveType: WaveType }){
-  const options: WebSynthBaseOptions = {
-    frequency: 830.61,
-    gain: 0.5,
-    waveType
-  };
-  const synth = useWebSynth(options)
-  return (
-    <button onClick={synth.toggle}>
-      G#
-    </button> 
-  )
-};
 
 export function WebSynth(){
   const [waveType, setWaveType] = useState<WaveType>('triangle')
+  const [frequency, setFrequency] = useState(440);
+  const [gain, setGain] = useState(0.25);
+
+  const audioContext = context()!;
+  const oscillator = audioContext.createOscillator()!;
+  const filter = audioContext.createBiquadFilter()!;
+  const mixer = audioContext.createGain()!
+  
+  oscillator!.connect(filter).connect(mixer).connect(audioContext.destination)
+  oscillator.type = waveType
+  oscillator.frequency.value = frequency;
+  mixer.gain.value = gain;
+  oscillator.start()
 
   return (
     <div
       style={{display: 'flex', flexDirection: 'column'}}
     >
+
+      <button 
+        style={{width: '25%', margin :'auto'}}
+        onClick={() => audioContext.resume()}
+      >
+        Start
+      </button>
+
+      <button 
+        style={{width: '25%', margin :'auto'}} 
+        onClick={() =>  audioContext.suspend()}
+      >
+        Stop
+      </button>
 
       <label style={{marginTop: '10px'}}>
         Wave type
@@ -159,16 +90,47 @@ export function WebSynth(){
         htmlFor="volume"
       >
         Pitch
-      </label>
+      </label> 
 
       <div style={{display: 'flex', justifyContent: 'center'}}>
-        <APitch waveType={waveType} />
-        <BPitch waveType={waveType} />
-        <CSharpPitch waveType={waveType} />
-        <DPitch waveType={waveType} />
-        <EPitch waveType={waveType} />
-        <FSharpPitch waveType={waveType} />
-        <GSharpPitch waveType={waveType} />
+        {pitchNames.map(({label, value} ,index) => {
+          return (
+            <button 
+              key={value}
+              onClick={() => setFrequency(value)}
+              style={{
+                color: frequency === value ? 'blue' : '',
+                borderColor: frequency === value ? 'blue' : ''
+              }} 
+            >
+              {label}
+            </button> 
+          )
+        })}
+      </div>
+
+      <label
+        style={{width: '100px', margin: '10px auto auto'}} 
+        htmlFor="volume"
+      >
+        Gain
+      </label> 
+
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+        {gains.map((value ,index) => {
+          return (
+            <button 
+              key={value}
+              onClick={() => setGain(value)}
+              style={{
+                color: gain === value ? 'blue' : '',
+                borderColor: gain === value ? 'blue' : ''
+              }} 
+            >
+              {value}
+            </button> 
+          )
+        })}
       </div>
   
     </div>
