@@ -1,8 +1,17 @@
 import context from 'audio-context';
 import  {useState } from 'react';
 
-import { WaveType } from '../modules';
+export type WaveType = 'sawtooth'
+  | 'sine'
+  | 'square'
+  | 'triangle'
+  | 'custom'
 
+export type WebSynthBaseOptions = {
+  waveType: WaveType,
+  frequency: number;
+  gain: number;
+};
 const waveTypes: WaveType[] = [
   'sawtooth',
   'sine',
