@@ -1,44 +1,55 @@
-export function TremeloControls({
-  tremeloSpeed,
-  onTremeloClick,
-  onTremeloSpeedClick
-}: {
-  tremeloSpeed: string;
-  onTremeloClick: (speed: string) => void; 
-  onTremeloSpeedClick: (speed: string) => void;
-}){
+import { useState, useRef } from "react";
 
+import { Tremelo } from "../modules/Tremelo";
+
+const tremeloBase = new Tremelo();
+
+export function TremeloControls(){
+  const [tremeloSpeed, setTremeloSpeed] = useState('fast')
+  const tremelo = useRef(tremeloBase)
   return (
     <>
       <label
         style={{ width: '200px', margin: '10px auto auto' }}
         htmlFor="volume"
       >
-        Tremelo Speed
+        Tremelo
       </label>
 
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {['fast', 'medium', 'slow'].map((value, index) => {
+        {['fast', 'medium', 'slow'].map((speed, index) => {
           return (
             <button
-              key={value}
-              onClick={() => onTremeloSpeedClick(value)}
+              key={speed}
+              onClick={() => setTremeloSpeed(speed)}
               style={{
-                color: tremeloSpeed === value ? 'blue' : '',
-                borderColor: tremeloSpeed === value ? 'blue' : ''
+                color: tremeloSpeed === speed ? 'blue' : '',
+                borderColor: tremeloSpeed === speed ? 'blue' : ''
               }}
             >
-              {value}
+              {speed}
             </button>
           )
         })}
       </div>
 
       <button
-        style={{ width: '25%', margin: 'auto' }}
-        onClick={() => onTremeloClick(tremeloSpeed)}
+        style={{ width: '15%', margin: '10px auto auto' }}
+        onClick={() => tremelo.current.trigger(tremeloSpeed)}
       >
-        Tremelo
+        Trigger
+      </button>
+      <button 
+        style={{ width: '15%', margin: '10px auto auto' }}
+        onClick={() => tremelo.current.start()}
+      >
+        On
+      </button>
+      <button
+        style={{ width: '15%', margin: '10px auto auto' }} 
+        onClick={() => tremelo.current.stop()}
+      >
+        Off
       </button>
     </>
   )

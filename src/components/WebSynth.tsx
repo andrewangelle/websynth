@@ -1,7 +1,7 @@
 // import context from 'audio-context';
 import { useState, useRef } from 'react';
 import { gains, waveTypes } from './constants';
-import { Synth } from './Synth';
+import { Tremelo } from '../modules/Tremelo';
 import { TremeloControls } from './TremeloControls';
 
 export type WaveType = 'sawtooth'
@@ -17,18 +17,15 @@ export type WebSynthBaseOptions = {
 };
 
 
+
 export function WebSynth(){
-  const [waveType, setWaveType] = useState<WaveType>('triangle')
-  const [gain, setGain] = useState(0.25);
-  const [tremeloSpeed, setTremeloSpeed] = useState('fast')
-  const ref = useRef(new Synth({waveType, gain, frequency: 440}))
 
   return (
     <div
       style={{display: 'flex', flexDirection: 'column'}}
     >
       
-      <label style={{marginTop: '10px'}}>
+      {/* <label style={{marginTop: '10px'}}>
         Wave type
       </label>
 
@@ -46,9 +43,9 @@ export function WebSynth(){
             {type}
           </button> 
         ))}
-      </div> 
+      </div>  */}
 
-      <label
+      {/* <label
         style={{width: '100px', margin: '10px auto auto'}} 
         htmlFor="volume"
       >
@@ -70,13 +67,9 @@ export function WebSynth(){
             </button> 
           )
         })}
-      </div>
+      </div> */}
 
-      <TremeloControls 
-        tremeloSpeed={tremeloSpeed}
-        onTremeloSpeedClick={setTremeloSpeed}
-        onTremeloClick={() => ref.current.triggerTremelo(tremeloSpeed)}
-      />
+      <TremeloControls  />
     </div>
   ) 
 }
