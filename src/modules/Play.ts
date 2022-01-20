@@ -5,7 +5,7 @@ export class Play {
   oscillator: OscillatorNode;
   vca: GainNode;
 
-  constructor(){
+  constructor({frequency}: {frequency: number}){
     this.ctx = audioContext()
     this.oscillator = this.ctx?.createOscillator()!;
     this.vca = this.ctx?.createGain()!
@@ -15,7 +15,7 @@ export class Play {
       .connect(this.ctx?.destination!);
 
     this.oscillator.type = 'triangle' 
-    this.oscillator.frequency.value = 440;
+    this.oscillator.frequency.value = frequency;
     this.vca.gain.value = 0
 
     this.oscillator.start()
@@ -23,6 +23,9 @@ export class Play {
   }
 
   playStart(){
+    if(this.ctx?.state === 'suspended'){
+      this.ctx?.resume()
+    }
     this.vca.gain.value = 1;
 
     return this

@@ -1,4 +1,5 @@
 import { Play } from '../modules/Play';
+import { pitchNames } from './constants';
 import { TremeloControls } from './TremeloControls';
 
 export type WaveType = 'sawtooth'
@@ -13,21 +14,31 @@ export type WebSynthBaseOptions = {
   gain: number;
 };
 
-const playButton = new Play()
-
 export function WebSynth(){
 
   return (
     <div
       style={{display: 'flex', flexDirection: 'column'}}
     >
-      <button
-       style={{ width: '15%', margin: '10px auto auto' }}
-       onKeyDown={() => playButton.playStart()}
-       onKeyUp={() => playButton.playStop()}
-      >
-        Play
-      </button>
+
+    <div
+      style={{display: 'flex', margin: 'auto'}}
+    >
+      {pitchNames.map(pitch => {
+        const play = new Play({frequency: pitch.value})
+        return (
+          <button
+            key={pitch.value}
+            onKeyDown={(event) => event.key === ' ' && play.playStart()}
+            onKeyUp={(event) => event.key === ' ' && play.playStop()}
+            onMouseDown={() => play.playStart()}
+            onMouseUp={() => play.playStop()}
+          >
+            {pitch.label}
+          </button>        
+        )
+      })}
+    </div>
       <TremeloControls  />
     </div>
   ) 
