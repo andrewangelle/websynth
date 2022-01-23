@@ -1,6 +1,6 @@
 import { RecoilRoot } from 'recoil';
 
-import { WebSynth } from './WebSynth';
+import { WebSynth } from 'src/components';
 
 function App() {
   return (
