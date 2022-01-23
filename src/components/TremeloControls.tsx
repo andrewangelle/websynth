@@ -1,22 +1,10 @@
-import { useState, useRef } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
-import { Tremelo } from "../modules/Tremelo";
-
-const tremeloBase = new Tremelo();
-
-export function TremeloControls(){
-  const [tremeloSpeed, setTremeloSpeed] = useState('fast')
-  const tremelo = useRef(tremeloBase)
+type TremeloControlsProps = {tremeloSpeed: string; setTremeloSpeed: Dispatch<SetStateAction<string>>};
+export function TremeloControls({tremeloSpeed, setTremeloSpeed}: TremeloControlsProps){
   return (
     <>
-      <label
-        style={{ width: '200px', margin: '10px auto auto' }}
-        htmlFor="volume"
-      >
-        Tremelo
-      </label>
-
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', margin: '10px auto auto' }}>
         {['fast', 'medium', 'slow'].map((speed, index) => {
           return (
             <button
@@ -32,25 +20,6 @@ export function TremeloControls(){
           )
         })}
       </div>
-
-      <button
-        style={{ width: '15%', margin: '10px auto auto' }}
-        onClick={() => tremelo.current.trigger(tremeloSpeed)}
-      >
-        Trigger
-      </button>
-      <button 
-        style={{ width: '15%', margin: '10px auto auto' }}
-        onClick={() => tremelo.current.start()}
-      >
-        On
-      </button>
-      <button
-        style={{ width: '15%', margin: '10px auto auto' }} 
-        onClick={() => tremelo.current.stop()}
-      >
-        Off
-      </button>
     </>
   )
 }

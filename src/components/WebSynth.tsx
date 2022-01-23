@@ -1,5 +1,6 @@
-import { Play } from '../modules/Play';
+import { useState } from 'react';
 import { pitchNames } from './constants';
+import { PitchKey } from './PitchKey';
 import { TremeloControls } from './TremeloControls';
 
 export type WaveType = 'sawtooth'
@@ -15,31 +16,52 @@ export type WebSynthBaseOptions = {
 };
 
 export function WebSynth(){
+  const [delayOn, setDelayOn] = useState(false);
+  const [tremeloOn, setTremeloOn] = useState(false);
+  const [tremeloSpeed, setTremeloSpeed] = useState('fast')
 
-  return (
-    <div
-      style={{display: 'flex', flexDirection: 'column'}}
-    >
+  return ( 
+    <div style={{display: 'flex', flexDirection: 'column'}}>
 
-    <div
-      style={{display: 'flex', margin: 'auto'}}
-    >
-      {pitchNames.map(pitch => {
-        const play = new Play({frequency: pitch.value})
-        return (
-          <button
-            key={pitch.value}
-            onKeyDown={(event) => event.key === ' ' && play.playStart()}
-            onKeyUp={(event) => event.key === ' ' && play.playStop()}
-            onMouseDown={() => play.playStart()}
-            onMouseUp={() => play.playStop()}
-          >
-            {pitch.label}
-          </button>        
-        )
-      })}
-    </div>
-      <TremeloControls  />
+      <div style={{display: 'flex', margin: 'auto'}}>
+        {pitchNames.map(pitchInfo => 
+          <PitchKey 
+            pitchInfo={pitchInfo} 
+            delayOn={delayOn} 
+            tremeloOn={tremeloOn}
+            tremeloSpeed={tremeloSpeed}
+          />
+        )}
+      </div>
+
+      <button 
+        style={{
+          width: '5%', 
+          margin: '10px auto auto',
+          color: delayOn ? 'blue' : '',
+          borderColor: delayOn ? 'blue' : ''
+        }}
+        onClick={() => setDelayOn(prevState => !prevState)}
+      >
+        Delay
+      </button>
+
+      <button 
+        style={{
+          width: '5%', 
+          margin: '10px auto auto',
+          color: tremeloOn ? 'blue' : '',
+          borderColor: tremeloOn ? 'blue' : ''
+        }}
+        onClick={() => setTremeloOn(prevState => !prevState)}
+      >
+        Tremelo
+      </button>
+
+      <TremeloControls  
+        tremeloSpeed={tremeloSpeed}
+        setTremeloSpeed={setTremeloSpeed}
+      />
     </div>
   ) 
 }
