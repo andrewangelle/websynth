@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import stylex from '@ladifire-opensource/stylex';
 
 import { pitchNames } from './constants';
 import { PitchKey } from './PitchKey';
 import { TremeloControls } from './TremeloControls';
 import { FlexCenter, FlexColumn } from '../styles/Flex';
+import { useRecoilState } from 'recoil';
+import { delayToggleState, tremeloSpeedState, tremeloToggleState } from '../store';
+import { DelayControls } from './DelayControls';
 
 export type WaveType = 'sawtooth'
   | 'sine'
@@ -19,31 +20,9 @@ export type WebSynthBaseOptions = {
 };
 
 export function WebSynth(){
-  const [delayOn, setDelayOn] = useState(false);
-  const [tremeloOn, setTremeloOn] = useState(false);
-  const [tremeloSpeed, setTremeloSpeed] = useState('fast')
-
-  const delayButtonStyles = stylex.dedupe(
-    {
-      width: '15%', 
-      margin: '10px auto auto',
-    },
-    delayOn ? {
-      color: 'blue',
-      borderColor: 'blue' 
-    } : {}
-  );
-
-  const tremeloButtonStyles = stylex.dedupe(
-    {
-      width: '15%', 
-      margin: '10px auto auto',
-    },
-    tremeloOn ? {
-      color: 'blue' ,
-      borderColor: 'blue'
-    } : {}
-  );
+  const [delayOn] = useRecoilState(delayToggleState)
+  const [tremeloOn] = useRecoilState(tremeloToggleState)
+  const [tremeloSpeed] =  useRecoilState(tremeloSpeedState) 
     
   return ( 
 
@@ -60,21 +39,8 @@ export function WebSynth(){
         )}
       </FlexCenter>
 
-      <FlexCenter>
-        <button 
-          className={delayButtonStyles}
-          onClick={() => setDelayOn(prevState => !prevState)}
-        >
-          Delay
-        </button>
-      </FlexCenter>
-
-      <TremeloControls  
-        styles={tremeloButtonStyles}
-        tremeloSpeed={tremeloSpeed}
-        setTremeloSpeed={setTremeloSpeed}
-        setTremeloOn={setTremeloOn}
-      />
+      <DelayControls />
+      <TremeloControls   />
     </FlexColumn>
   ) 
 }

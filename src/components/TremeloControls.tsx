@@ -1,19 +1,27 @@
-import { Dispatch, SetStateAction } from "react";
+import stylex from "@ladifire-opensource/stylex";
+import { useRecoilState } from "recoil";
+
+import { tremeloSpeedState, tremeloToggleState } from "../store";
 import { FlexCenter } from "../styles/Flex";
 
-type TremeloControlsProps = {
-  styles: string;
-  tremeloSpeed: string; 
-  setTremeloSpeed: Dispatch<SetStateAction<string>>
-  setTremeloOn: Dispatch<SetStateAction<boolean>>
-};
-
-export function TremeloControls({styles, tremeloSpeed, setTremeloSpeed, setTremeloOn}: TremeloControlsProps){
+export function TremeloControls(){
+  const [tremeloOn, setTremeloOn] = useRecoilState(tremeloToggleState)
+  const [tremeloSpeed, setTremeloSpeed] = useRecoilState(tremeloSpeedState)
+  const tremeloButtonStyles = stylex.dedupe(
+    {
+      width: '15%', 
+      margin: '10px auto auto',
+    },
+    tremeloOn ? {
+      color: 'blue' ,
+      borderColor: 'blue'
+    } : {}
+  );
   return (
     <>
       <FlexCenter>
         <button 
-          className={styles}
+          className={tremeloButtonStyles}
           onClick={() => setTremeloOn(prevState => !prevState)}
         >
           Tremelo
