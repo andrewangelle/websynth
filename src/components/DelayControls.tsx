@@ -1,8 +1,8 @@
 import stylex from "@ladifire-opensource/stylex";
 import { useRecoilState } from "recoil";
 
-import { delayToggleState } from "../store";
-import { FlexCenter } from "../styles/Flex";
+import { delayToggleState } from "src/store";
+import { FlexCenter } from "src/styles";
 
 export function DelayControls(){
   const [delayOn, setDelayOn] = useRecoilState(delayToggleState)

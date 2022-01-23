@@ -2,7 +2,7 @@ import { RecoilRoot } from 'recoil';
 
 import { WebSynth } from 'src/components';
 
-function App() {
+export function App() {
   return (
     <div className="App">
       <RecoilRoot>
@@ -11,5 +11,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

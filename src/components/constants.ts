@@ -1,4 +1,4 @@
-import { WaveType } from "./WebSynth";
+import { WaveType } from "src/components";
 
 export const pitches = [
   {frequency: 440, wave: 'triangle', label: 'A'}, // A
