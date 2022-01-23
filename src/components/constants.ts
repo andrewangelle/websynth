@@ -10,9 +10,7 @@ export const pitches = [
   {frequency: 830.61, wave: 'triangle', label: 'G#'} // G#
 ]
 export const pitchNames = [
-  {label: 'A', value: 440},
-  {label: 'A#/Bb', value: 466.16},
-  {label: 'B', value: 493.88},
+
   {label: 'C', value: 523.25},
   {label: 'C#/Db', value: 554.37},
   {label: 'D', value: 587.33},
@@ -21,7 +19,10 @@ export const pitchNames = [
   {label: 'F', value: 698.46},
   {label: 'F#/Gb', value: 739.99},
   {label: 'G', value: 783.99},
-  {label: 'G#', value: 830.61}
+  {label: 'G#', value: 830.61},
+  {label: 'A', value: 880},
+  {label: 'A#/Bb', value: 932.33},
+  {label: 'B', value: 987.77},
 ];
 
 export const gains = [

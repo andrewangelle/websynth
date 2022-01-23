@@ -1,23 +1,23 @@
 import { KeyboardEvent } from "react";
+import { useRecoilState } from "recoil";
 
 import { Pitch } from "src/modules";
+import { PianoKey } from "src/styles";
+import { tremeloToggleState, tremeloSpeedState, delayToggleState } from "src/store";
 
 type PitchKeyProps = {
-  delayOn: boolean; 
-  tremeloOn: boolean;
-  tremeloSpeed: string;
   pitchInfo: {
     label: string; 
     value: number;
   }
 }
 export function PitchKey({
-  delayOn, 
-  tremeloOn,
-  tremeloSpeed,
   pitchInfo
 }: PitchKeyProps){
   const pitch = new Pitch({frequency: pitchInfo.value});
+  const [delayOn] = useRecoilState(delayToggleState);
+  const [tremeloOn] = useRecoilState(tremeloToggleState);
+  const [tremeloSpeed] =  useRecoilState(tremeloSpeedState);
 
   function startPitch(){
     if(delayOn){
@@ -51,14 +51,13 @@ export function PitchKey({
     }
   }
   return (
-    <button
+    <PianoKey
       key={pitchInfo.value}
+      isBlackKey={pitchInfo.label.includes('#')}
       onKeyDown={startPitchOnKeyDown}
       onKeyUp={stopPitchOnKeyUp}
       onMouseDown={startPitch}
       onMouseUp={() => pitch.playStop()}
-    >
-      {pitchInfo.label}
-    </button>        
+    />
   )
 }

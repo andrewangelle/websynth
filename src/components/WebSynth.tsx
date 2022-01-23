@@ -1,11 +1,5 @@
-
-import { useRecoilState } from 'recoil';
-
-import { PitchKey, TremeloControls, DelayControls } from 'src/components';
+import { PitchKey, TremeloControls, DelayControls, pitchNames } from 'src/components';
 import { FlexCenter, FlexColumn } from 'src/styles';
-
-import { delayToggleState, tremeloSpeedState, tremeloToggleState } from 'src/store';
-import { pitchNames } from 'src/components/constants';
 
 export type WaveType = 'sawtooth'
   | 'sine'
@@ -20,10 +14,6 @@ export type WebSynthBaseOptions = {
 };
 
 export function WebSynth(){
-  const [delayOn] = useRecoilState(delayToggleState)
-  const [tremeloOn] = useRecoilState(tremeloToggleState)
-  const [tremeloSpeed] =  useRecoilState(tremeloSpeedState) 
-    
   return ( 
 
     <FlexColumn>
@@ -31,10 +21,7 @@ export function WebSynth(){
         {pitchNames.map(pitchInfo => 
           <PitchKey 
             key={pitchInfo.value}
-            pitchInfo={pitchInfo} 
-            delayOn={delayOn} 
-            tremeloOn={tremeloOn}
-            tremeloSpeed={tremeloSpeed}
+            pitchInfo={pitchInfo}
           />
         )}
       </FlexCenter>
