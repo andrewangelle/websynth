@@ -1,5 +1,5 @@
-import { PitchKey, TremeloControls, DelayControls, pitchNames } from 'src/components';
-import { FlexCenter, FlexColumn } from 'src/styles';
+import { TremeloControls, DelayControls, Keyboard } from 'src/components';
+import { FlexColumn } from 'src/styles';
 
 export type WaveType = 'sawtooth'
   | 'sine'
@@ -15,17 +15,8 @@ export type WebSynthBaseOptions = {
 
 export function WebSynth(){
   return ( 
-
     <FlexColumn>
-      <FlexCenter>
-        {pitchNames.map(pitchInfo => 
-          <PitchKey 
-            key={pitchInfo.value}
-            pitchInfo={pitchInfo}
-          />
-        )}
-      </FlexCenter>
-
+      <Keyboard />
       <DelayControls />
       <TremeloControls   />
     </FlexColumn>

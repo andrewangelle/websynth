@@ -4,3 +4,4 @@ export * from './PitchKey';
 export * from './DelayControls';
 export * from './TremeloControls';
 export * from './App'
+export * from './Keyboard';

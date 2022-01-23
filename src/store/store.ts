@@ -10,7 +10,6 @@ export const tremeloToggleState = atom({
   default: false, 
 });
 
-
 export const tremeloSpeedState = atom({
   key: 'tremeloSpeed', 
   default: 'fast', 
