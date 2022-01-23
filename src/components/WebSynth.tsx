@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import stylex from '@ladifire-opensource/stylex';
+
 import { pitchNames } from './constants';
 import { PitchKey } from './PitchKey';
 import { TremeloControls } from './TremeloControls';
+import { FlexCenter, FlexColumn } from '../styles/Flex';
 
 export type WaveType = 'sawtooth'
   | 'sine'
@@ -20,48 +23,58 @@ export function WebSynth(){
   const [tremeloOn, setTremeloOn] = useState(false);
   const [tremeloSpeed, setTremeloSpeed] = useState('fast')
 
-  return ( 
-    <div style={{display: 'flex', flexDirection: 'column'}}>
+  const delayButtonStyles = stylex.dedupe(
+    {
+      width: '15%', 
+      margin: '10px auto auto',
+    },
+    delayOn ? {
+      color: 'blue',
+      borderColor: 'blue' 
+    } : {}
+  );
 
-      <div style={{display: 'flex', margin: 'auto'}}>
+  const tremeloButtonStyles = stylex.dedupe(
+    {
+      width: '15%', 
+      margin: '10px auto auto',
+    },
+    tremeloOn ? {
+      color: 'blue' ,
+      borderColor: 'blue'
+    } : {}
+  );
+    
+  return ( 
+
+    <FlexColumn>
+      <FlexCenter>
         {pitchNames.map(pitchInfo => 
           <PitchKey 
+            key={pitchInfo.value}
             pitchInfo={pitchInfo} 
             delayOn={delayOn} 
             tremeloOn={tremeloOn}
             tremeloSpeed={tremeloSpeed}
           />
         )}
-      </div>
+      </FlexCenter>
 
-      <button 
-        style={{
-          width: '5%', 
-          margin: '10px auto auto',
-          color: delayOn ? 'blue' : '',
-          borderColor: delayOn ? 'blue' : ''
-        }}
-        onClick={() => setDelayOn(prevState => !prevState)}
-      >
-        Delay
-      </button>
-
-      <button 
-        style={{
-          width: '5%', 
-          margin: '10px auto auto',
-          color: tremeloOn ? 'blue' : '',
-          borderColor: tremeloOn ? 'blue' : ''
-        }}
-        onClick={() => setTremeloOn(prevState => !prevState)}
-      >
-        Tremelo
-      </button>
+      <FlexCenter>
+        <button 
+          className={delayButtonStyles}
+          onClick={() => setDelayOn(prevState => !prevState)}
+        >
+          Delay
+        </button>
+      </FlexCenter>
 
       <TremeloControls  
+        styles={tremeloButtonStyles}
         tremeloSpeed={tremeloSpeed}
         setTremeloSpeed={setTremeloSpeed}
+        setTremeloOn={setTremeloOn}
       />
-    </div>
+    </FlexColumn>
   ) 
 }

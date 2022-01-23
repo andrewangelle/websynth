@@ -1,10 +1,26 @@
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
+import { FlexCenter } from "../styles/Flex";
 
-type TremeloControlsProps = {tremeloSpeed: string; setTremeloSpeed: Dispatch<SetStateAction<string>>};
-export function TremeloControls({tremeloSpeed, setTremeloSpeed}: TremeloControlsProps){
+type TremeloControlsProps = {
+  styles: string;
+  tremeloSpeed: string; 
+  setTremeloSpeed: Dispatch<SetStateAction<string>>
+  setTremeloOn: Dispatch<SetStateAction<boolean>>
+};
+
+export function TremeloControls({styles, tremeloSpeed, setTremeloSpeed, setTremeloOn}: TremeloControlsProps){
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'center', margin: '10px auto auto' }}>
+      <FlexCenter>
+        <button 
+          className={styles}
+          onClick={() => setTremeloOn(prevState => !prevState)}
+        >
+          Tremelo
+        </button>
+      </FlexCenter>
+
+      <FlexCenter>
         {['fast', 'medium', 'slow'].map((speed, index) => {
           return (
             <button
@@ -19,7 +35,7 @@ export function TremeloControls({tremeloSpeed, setTremeloSpeed}: TremeloControls
             </button>
           )
         })}
-      </div>
+      </FlexCenter> 
     </>
   )
 }

@@ -1,6 +1,4 @@
-import React from 'react';
-import { WebSynth } from '.';
-import './App.css';
+import { WebSynth } from './WebSynth';
 
 function App() {
   return (
