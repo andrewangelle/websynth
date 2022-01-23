@@ -1,8 +1,8 @@
 import stylex from "@ladifire-opensource/stylex";
 import { useRecoilState } from "recoil";
 
-import { tremeloSpeedState, tremeloToggleState } from "../store";
-import { FlexCenter } from "../styles/Flex";
+import { tremeloSpeedState, tremeloToggleState } from "store";
+import { FlexCenter } from "styles";
 
 export function TremeloControls(){
   const [tremeloOn, setTremeloOn] = useRecoilState(tremeloToggleState)

@@ -1,5 +1,6 @@
 import { KeyboardEvent } from "react";
-import { Pitch } from "../modules/Pitch";
+
+import { Pitch } from "modules";
 
 type PitchKeyProps = {
   delayOn: boolean; 

@@ -1,11 +1,11 @@
 
-import { pitchNames } from './constants';
-import { PitchKey } from './PitchKey';
-import { TremeloControls } from './TremeloControls';
-import { FlexCenter, FlexColumn } from '../styles/Flex';
 import { useRecoilState } from 'recoil';
-import { delayToggleState, tremeloSpeedState, tremeloToggleState } from '../store';
-import { DelayControls } from './DelayControls';
+
+import { PitchKey, TremeloControls, DelayControls } from 'components';
+import { FlexCenter, FlexColumn } from 'styles';
+
+import { delayToggleState, tremeloSpeedState, tremeloToggleState } from 'store';
+import { pitchNames } from 'components/constants';
 
 export type WaveType = 'sawtooth'
   | 'sine'
