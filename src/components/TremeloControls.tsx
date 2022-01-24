@@ -1,46 +1,63 @@
-import stylex from "@ladifire-opensource/stylex";
+import styled from "styled-components";
 import { useRecoilState } from "recoil";
 
 import { tremeloSpeedState, tremeloToggleState } from "src/store";
 import { FlexCenter, FlexColumn } from "src/styles";
 
+const TremeloToggleButton = styled.button<{isSelected: boolean}>`
+  width: 25%;
+  margin: 10px auto auto;
+
+  ${props => {
+    if(props.isSelected){
+      return `
+        color: blue;
+        border: 2px solid blue;
+      `
+    }
+    return ''
+  }}
+`
+
+const TremeloSpeedButton = styled.button<{isActive: boolean}>`
+  width: 15%;
+  margin: 10px auto auto;
+
+  ${props => {
+    if(props.isActive){
+      return `
+        color: blue;
+        border: 2px solid blue;
+      `
+    }
+    return ''
+  }}
+`
+
 export function TremeloControls(){
   const [tremeloOn, setTremeloOn] = useRecoilState(tremeloToggleState)
   const [tremeloSpeed, setTremeloSpeed] = useRecoilState(tremeloSpeedState)
-  const tremeloButtonStyles = stylex.dedupe(
-    {
-      width: '25%', 
-      margin: '10px auto auto',
-    },
-    tremeloOn ? {
-      color: 'blue' ,
-      borderColor: 'blue'
-    } : {}
-  );
   return (
     <FlexColumn>
       <FlexCenter>
-        <button 
-          className={tremeloButtonStyles}
+        <TremeloToggleButton 
+          isSelected={tremeloOn}
           onClick={() => setTremeloOn(prevState => !prevState)}
         >
-          Tremelo
-        </button>
+          {`Tremelo ${tremeloOn ? 'On' : 'Off'}`}
+        </TremeloToggleButton>
       </FlexCenter>
 
       <FlexCenter>
         {['fast', 'medium', 'slow'].map((speed, index) => {
           return (
-            <button
+            <TremeloSpeedButton
               key={speed}
+              isActive={tremeloSpeed === speed }
               onClick={() => setTremeloSpeed(speed)}
-              style={{
-                color: tremeloSpeed === speed ? 'blue' : '',
-                borderColor: tremeloSpeed === speed ? 'blue' : ''
-              }}
             >
               {speed}
-            </button>
+            </TremeloSpeedButton>
           )
         })}
       </FlexCenter> 
