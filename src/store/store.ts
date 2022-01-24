@@ -5,6 +5,10 @@ export const delayToggleState = atom({
   default: false
 })
 
+export const delaySpeedState = atom({
+  key: 'delaySpeed',
+  default: 50
+})
 export const tremeloToggleState = atom({
   key: 'tremeloOn', 
   default: false, 

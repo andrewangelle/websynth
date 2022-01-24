@@ -1,14 +1,13 @@
-import { PropsWithChildren } from "react";
+import styled from "styled-components";
 
-export function FlexColumn({children}: PropsWithChildren<{}>){
-  return (
-    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>{children}</div>
-  )
-}
+export const FlexColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+`
 
-
-export function FlexCenter({children}: PropsWithChildren<{}>){
-  return (
-    <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>{children}</div>
-  )
-}
+export const FlexCenter = styled.div`
+  display: flex;
+  justify-content: center;
+`

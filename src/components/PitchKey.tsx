@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 
 import { Pitch } from "src/modules";
 import { PianoKey } from "src/styles";
-import { tremeloToggleState, tremeloSpeedState, delayToggleState } from "src/store";
+import { tremeloToggleState, tremeloSpeedState, delayToggleState, delaySpeedState } from "src/store";
 
 type PitchKeyProps = {
   pitchInfo: {
@@ -18,10 +18,11 @@ export function PitchKey({
   const [delayOn] = useRecoilState(delayToggleState);
   const [tremeloOn] = useRecoilState(tremeloToggleState);
   const [tremeloSpeed] =  useRecoilState(tremeloSpeedState);
-
+  const [delaySpeed] = useRecoilState(delaySpeedState);
+  
   function startPitch(){
     if(delayOn){
-      pitch.delayStart()
+      pitch.delayStart(delaySpeed)
     } else if(tremeloOn){
       pitch.tremeloStart(tremeloSpeed)
     }

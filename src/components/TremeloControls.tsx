@@ -2,14 +2,14 @@ import stylex from "@ladifire-opensource/stylex";
 import { useRecoilState } from "recoil";
 
 import { tremeloSpeedState, tremeloToggleState } from "src/store";
-import { FlexCenter } from "src/styles";
+import { FlexCenter, FlexColumn } from "src/styles";
 
 export function TremeloControls(){
   const [tremeloOn, setTremeloOn] = useRecoilState(tremeloToggleState)
   const [tremeloSpeed, setTremeloSpeed] = useRecoilState(tremeloSpeedState)
   const tremeloButtonStyles = stylex.dedupe(
     {
-      width: '15%', 
+      width: '25%', 
       margin: '10px auto auto',
     },
     tremeloOn ? {
@@ -18,7 +18,7 @@ export function TremeloControls(){
     } : {}
   );
   return (
-    <>
+    <FlexColumn>
       <FlexCenter>
         <button 
           className={tremeloButtonStyles}
@@ -44,6 +44,6 @@ export function TremeloControls(){
           )
         })}
       </FlexCenter> 
-    </>
+    </FlexColumn>
   )
 }

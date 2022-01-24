@@ -1,5 +1,5 @@
 import { TremeloControls, DelayControls, Keyboard } from 'src/components';
-import { FlexColumn } from 'src/styles';
+import { FlexCenter } from 'src/styles';
 
 export type WaveType = 'sawtooth'
   | 'sine'
@@ -15,10 +15,12 @@ export type WebSynthBaseOptions = {
 
 export function WebSynth(){
   return ( 
-    <FlexColumn>
+    <div>
       <Keyboard />
-      <DelayControls />
-      <TremeloControls   />
-    </FlexColumn>
+      <FlexCenter>
+        <DelayControls />
+        <TremeloControls   />
+      </FlexCenter>
+    </div>
   ) 
 }

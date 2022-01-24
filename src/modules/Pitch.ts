@@ -44,14 +44,14 @@ export class Pitch {
   }
 
 
-  delayStart(){
+  delayStart(speed: number){
     this.vca.connect(this.delay);
     this.delay.connect(this.ctx?.destination!)
     this.delay.connect(this.feedback)
     this.feedback.connect(this.delay);
 
     // set defaults
-    this.delay.delayTime.value = 0.5;
+    this.delay.delayTime.value = speed / 100
     this.feedback.gain.value = 0.5;
 
     this.playStart();
@@ -59,7 +59,7 @@ export class Pitch {
 
   tremeloStart(speed: string){
     const cycle = [0.5, 1, 0.5, 0];
-    const levels = [...cycle, ...cycle, ...cycle, ...cycle, 0.5]
+    const levels = [...cycle, ...cycle, ...cycle, ...cycle,...cycle, 0.5]
     const tremeloSpeed = speed === 'fast' ? 0.5 : speed === 'medium' ? 1 : 2;
     this.vca.gain.setValueCurveAtTime(levels, this.ctx?.currentTime!, tremeloSpeed)
     
