@@ -16,11 +16,11 @@ export type WebSynthBaseOptions = {
 export function WebSynth(){
   return ( 
     <div>
-      <Keyboard />
       <FlexCenter>
         <DelayControls />
         <TremeloControls   />
       </FlexCenter>
+      <Keyboard />
     </div>
   ) 
 }
