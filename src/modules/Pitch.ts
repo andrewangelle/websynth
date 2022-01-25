@@ -57,10 +57,10 @@ export class Pitch {
     this.playStart();
   }
 
-  tremeloStart(speed: string){
+  tremeloStart(speed: number){
     const cycle = [0.5, 1, 0.5, 0];
     const levels = [...cycle, ...cycle, ...cycle, ...cycle,...cycle, 0.5]
-    const tremeloSpeed = speed === 'fast' ? 0.5 : speed === 'medium' ? 1 : 2;
+    const tremeloSpeed = speed / 100;
     this.vca.gain.setValueCurveAtTime(levels, this.ctx?.currentTime!, tremeloSpeed)
     
   }
