@@ -6,6 +6,7 @@ export class Pitch {
   vca: GainNode;
   delay: DelayNode;
   feedback: GainNode;
+  filter: BiquadFilterNode;
 
   constructor({ frequency }: { frequency: number }){
     this.ctx = audioContext()
@@ -13,7 +14,8 @@ export class Pitch {
     this.vca = this.ctx?.createGain()!
     this.feedback = this.ctx?.createGain()!
     this.delay = this.ctx?.createDelay()!
-  
+    this.filter = this.ctx?.createBiquadFilter()!
+
     // connect the pieces
     this.oscillator
       .connect(this.vca)
@@ -25,7 +27,7 @@ export class Pitch {
 
     // start
     this.oscillator.start()
-
+    
   }
 
   playStart(){
@@ -47,13 +49,15 @@ export class Pitch {
   delayStart(speed: number){
     this.vca.connect(this.delay);
     this.delay.connect(this.ctx?.destination!)
+
     this.delay.connect(this.feedback)
     this.feedback.connect(this.delay);
 
     // set defaults
     this.delay.delayTime.value = speed / 100
-    this.feedback.gain.value = 0.5;
-
+    this.feedback.gain.value = 0.7
+    this.filter.frequency.value = 400;
+    this.filter.gain.value = 0.5;
     this.playStart();
   }
 
@@ -61,7 +65,23 @@ export class Pitch {
     const cycle = [0.5, 1, 0.5, 0];
     const levels = [...cycle, ...cycle, ...cycle, ...cycle,...cycle, 0.5]
     const tremeloSpeed = speed / 100;
-    this.vca.gain.setValueCurveAtTime(levels, this.ctx?.currentTime!, tremeloSpeed)
-    
+    this.vca.gain.setValueCurveAtTime(levels, this.ctx?.currentTime!, tremeloSpeed);
+  }
+
+  playReverb(){
+    this.vca.connect(this.delay);
+    this.delay.connect(this.ctx?.destination!)
+
+    this.delay.connect(this.feedback)
+    this.feedback.connect(this.filter).connect(this.delay);
+
+    // set defaults
+    this.delay.delayTime.value = 0.025
+    this.feedback.gain.value = 0.725
+    this.filter.frequency.value = 1000;
+    this.filter.gain.value = 0.5;
+
+
+    this.playStart();
   }
 }

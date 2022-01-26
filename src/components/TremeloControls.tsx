@@ -28,7 +28,9 @@ export function TremeloControls(){
       <FlexCenter>
         <TremeloToggleButton 
           isSelected={tremeloOn}
-          onClick={() => setTremeloOn(prevState => !prevState)}
+          onClick={() => {
+            setTremeloOn(prevState => !prevState);
+          }}
         >
           {`Tremelo ${tremeloOn ? 'On' : 'Off'}`}
         </TremeloToggleButton>

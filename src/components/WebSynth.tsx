@@ -1,5 +1,6 @@
 import { TremeloControls, DelayControls, Keyboard } from 'src/components';
 import { FlexCenter } from 'src/styles';
+import { ReverbControls } from './ReverbControls';
 
 export type WaveType = 'sawtooth'
   | 'sine'
@@ -18,6 +19,7 @@ export function WebSynth(){
     <div>
       <FlexCenter>
         <DelayControls />
+        <ReverbControls />
         <TremeloControls   />
       </FlexCenter>
       <Keyboard />

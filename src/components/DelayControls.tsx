@@ -14,7 +14,7 @@ const DelayContainer = styled.div`
 `;
 
 const DelayButton = styled.button<{isSelected: boolean}>`
-  width: 15%;
+  width: 25%;
   margin: 10px auto;
 
   ${props => {
