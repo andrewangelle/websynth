@@ -1,6 +1,8 @@
 # Websynth 
 Built using the Web Audio API
 
+![Readme Photo](https://github.com/andrewangelle/websynth/blob/main/public/readmephoto.png)
+
 ## Setup
 Clone the repo. Run `npm i`
 ## Scripts
