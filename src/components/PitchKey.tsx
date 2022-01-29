@@ -3,7 +3,13 @@ import { useRecoilState } from "recoil";
 
 import { Pitch } from "src/modules";
 import { PianoKey } from "src/styles";
-import { tremeloToggleState, tremeloSpeedState, delayToggleState, delaySpeedState, reverbToggleState } from "src/store";
+import { 
+  tremeloToggleState, 
+  tremeloSpeedState, 
+  delayToggleState, 
+  delaySpeedState, 
+  reverbToggleState 
+} from "src/store";
 
 type PitchKeyProps = {
   pitchInfo: {
@@ -69,6 +75,7 @@ export function PitchKey({
       onKeyUp={stopPitchOnKeyUp}
       onMouseDown={startPitch}
       onMouseUp={() => pitch.playStop()}
+      onMouseLeave={() => pitch.playStop()}
     />
   )
 }

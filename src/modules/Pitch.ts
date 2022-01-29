@@ -65,7 +65,7 @@ export class Pitch {
     const cycle = [0.5, 1, 0.5, 0];
     const levels = [...cycle, ...cycle, ...cycle, ...cycle,...cycle, 0.5]
     const tremeloSpeed = speed / 100;
-    this.vca.gain.setValueCurveAtTime(levels, this.ctx?.currentTime!, tremeloSpeed);
+    this.vca.gain.setValueCurveAtTime(levels, this.ctx?.currentTime!, tremeloSpeed)
   }
 
   playReverb(){
@@ -76,10 +76,10 @@ export class Pitch {
     this.feedback.connect(this.filter).connect(this.delay);
 
     // set defaults
-    this.delay.delayTime.value = 0.025
-    this.feedback.gain.value = 0.725
-    this.filter.frequency.value = 1000;
-    this.filter.gain.value = 0.5;
+    this.delay.delayTime.value = 0.020
+    this.feedback.gain.value = 0.75
+    this.filter.frequency.value = 4000;
+    this.filter.gain.value = 0.8;
 
 
     this.playStart();
